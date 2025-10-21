@@ -21,13 +21,19 @@ export function ThemeToggle() {
 		<div className="flex items-center gap-2">
 			<Moon className="w-4 h-4 text-muted-foreground" />
 			<Select value={theme} onValueChange={setTheme}>
-				<SelectTrigger className="w-24">
+				<SelectTrigger className="w-24" aria-label="Theme selector">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="light">{t("light")}</SelectItem>
-					<SelectItem value="dark">{t("dark")}</SelectItem>
-					<SelectItem value="system">{t("system")}</SelectItem>
+					<SelectItem value="light" aria-label={t("light")}>
+						{t("light")}
+					</SelectItem>
+					<SelectItem value="dark" aria-label={t("dark")}>
+						{t("dark")}
+					</SelectItem>
+					<SelectItem value="system" aria-label={t("system")}>
+						{t("system")}
+					</SelectItem>
 				</SelectContent>
 			</Select>
 		</div>

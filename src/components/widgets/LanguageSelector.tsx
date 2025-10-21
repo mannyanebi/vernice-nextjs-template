@@ -34,12 +34,16 @@ export function LanguageSelector() {
 					)
 				}}
 			>
-				<SelectTrigger className="w-24">
+				<SelectTrigger className="w-24" aria-label="Language selector">
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
 					{routing.locales.map((cur) => (
-						<SelectItem key={cur} value={cur}>
+						<SelectItem
+							key={cur}
+							value={cur}
+							aria-label={cur === "tr" ? "Türkçe" : "English"}
+						>
 							{cur === "tr" ? "Türkçe" : "English"}
 						</SelectItem>
 					))}

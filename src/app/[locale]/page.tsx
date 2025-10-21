@@ -1,10 +1,9 @@
-import { Actions, Header, Stack, Title } from "@/widgets"
+import { Actions, Stack, Title } from "@/widgets"
 
 export default function Home() {
 	return (
-		<div className="container mx-auto px-4 py-8">
-			<div className="flex flex-col items-center justify-center gap-12">
-				<Header />
+		<div className="container mx-auto px-4">
+			<div className="flex flex-col items-center justify-center gap-12 mt-20">
 				<Title />
 				<Stack />
 				<Actions />

@@ -9,7 +9,7 @@ export function Stack() {
 		<div className="flex items-center justify-center gap-6">
 			{stackData.map((stack) => (
 				<Tooltip key={stack.text}>
-					<TooltipTrigger>
+					<TooltipTrigger aria-label={stack.text}>
 						<stack.icon className="size-6" />
 					</TooltipTrigger>
 					<TooltipContent>

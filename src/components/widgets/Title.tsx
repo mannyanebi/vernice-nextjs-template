@@ -14,7 +14,7 @@ export function Title() {
 	const t = useTranslations("Dashboard")
 
 	return (
-		<div className="flex flex-col items-center justify-center gap-6 mt-20">
+		<div className="flex flex-col items-center justify-center gap-6">
 			<Balancer
 				as="h1"
 				className="text-2xl lg:text-5xl font-bold text-center text-black dark:text-white"

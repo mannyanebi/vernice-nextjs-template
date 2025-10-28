@@ -1,6 +1,5 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import Link from "next/link"
 
 import { GitBranch, Rocket } from "lucide-react"
@@ -8,8 +7,6 @@ import { GitBranch, Rocket } from "lucide-react"
 import { Button } from "@/ui"
 
 export function Actions() {
-	const t = useTranslations("Dashboard")
-
 	return (
 		<div className="flex items-center justify-center gap-4">
 			<Button variant="outline" size="sm" asChild>
@@ -18,7 +15,7 @@ export function Actions() {
 					target="_blank"
 				>
 					<Rocket className="w-4 h-4" />
-					{t("deployToVercel")}
+					Deploy to Vercel
 				</Link>
 			</Button>
 			<Button variant="outline" size="sm" asChild>
@@ -27,7 +24,7 @@ export function Actions() {
 					target="_blank"
 				>
 					<GitBranch className="w-4 h-4" />
-					{t("useTemplate")}
+					Use template
 				</Link>
 			</Button>
 		</div>

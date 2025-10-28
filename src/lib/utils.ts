@@ -40,12 +40,8 @@ export const slugify = (text: string) => {
 		.replace(EDGE_DASHES_REGEX, "")
 }
 
-export const formatDate = (
-	date: Date,
-	format = "d MMMM yyyy",
-	locale: "tr" | "en" = APP_CONFIG.DEFAULT_LANGUAGE
-) => {
-	setDefaultOptions({ locale: locale === "tr" ? tr : enUS })
+export const formatDate = (date: Date, format = "d MMMM yyyy") => {
+	setDefaultOptions({ locale: enUS })
 	return dateFnsFormat(date, format)
 }
 

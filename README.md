@@ -13,7 +13,6 @@ With this template, you get all the awesomeness you need:
 - 💎 Type checking [TypeScript](https://www.typescriptlang.org/)
 - 🎨 Styled using [Tailwind CSS](https://tailwindcss.com/)
 - 📦 State management with [Zustand](https://zustand-demo.pmnd.rs/)
-- 🗺️ [next-intl](https://next-intl.dev/) for internationalization
 - 🧩 UI Components built with [shadcn/ui](https://ui.shadcn.com/)
 - 🔄 Data Fetching, Caching and Mutation with [TanStack Query](https://tanstack.com/query/latest)
 - ⌨️ Form handling with [React Hook Form](https://react-hook-form.com/)
@@ -23,7 +22,6 @@ With this template, you get all the awesomeness you need:
 - 💖 Code Formatter with [Prettier](https://prettier.io/)
 - 🎉 [Storybook](https://storybook.js.org/) for UI development
 - 🚨 Error tracking with [Sentry](https://sentry.io/)
-- 📊 Analytics with [Google Analytics](https://analytics.google.com/)
 - ⏳ Loading UI using [Skeleton Components](https://ui.shadcn.com/docs/components/skeleton)
 - 🌓 Dark theme with [next-themes](https://npmjs.com/package/next-themes)
 - 💡 [Absolute Imports](https://nextjs.org/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases) with `@` prefix
@@ -39,7 +37,6 @@ With this template, you get all the awesomeness you need:
 ```shell
 │
 ├── .husky                          # Husky git hook scripts
-├── messages                        # i18n messages
 ├── public                          # Public assets folder
 ├── src
 │   ├── app                         # Next JS App (App Router)
@@ -55,9 +52,8 @@ With this template, you get all the awesomeness you need:
 │   ├── data                        # Static or mock data
 │   ├── helpers                     # Reusable utility functions (e.g., API, formatting, storage)
 │   ├── hooks                       # Reusable custom React hooks
-│   ├── i18n                        # Internationalization setup
 │   ├── lib                         # Common utility functions
-│   ├── providers                   # Global context providers (theme, data fetching, notifications, i18n)
+│   ├── providers                   # Global context providers (theme, data fetching, notifications)
 │   ├── schemas                     # Validation schemas
 │   ├── services                    # API request functions
 │   ├── stores                      # Global state
@@ -91,28 +87,6 @@ The project follows consistent file naming conventions:
 ## Monitoring & Analytics
 
 🚧 Don't forget to replace all FIXME tags with proper code before finalizing the changes.
-
-### Error Tracking
-
-We use [Sentry](https://sentry.io/) for error tracking and performance monitoring. To set up:
-
-1. Create a Sentry account
-2. Add your DSN to `.env`:
-
-```env
-NEXT_PUBLIC_SENTRY_DSN=your-sentry-dsn
-```
-
-### Analytics
-
-We use [Google Analytics](https://analytics.google.com/) for tracking user behavior. To set up:
-
-1. Create a Google Analytics account
-2. Add your ID to `.env`:
-
-```env
-NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX
-```
 
 ### Contributors
 

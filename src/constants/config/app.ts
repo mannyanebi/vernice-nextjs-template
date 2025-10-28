@@ -1,14 +1,9 @@
 export const APP_CONFIG = {
-	GITHUB_URL: process.env.NEXT_PUBLIC_GITHUB_URL || "/",
-	JSON_PLACEHOLDER_URL: process.env.NEXT_PUBLIC_JSON_PLACEHOLDER_URL,
-	GA_ID: process.env.NEXT_PUBLIC_GA_ID,
-	SENTRY_DSN: process.env.NEXT_PUBLIC_SENTRY_DSN,
-	API_TIMEOUT: 10000,
-	APP_NAME: "NextJS Boilerplate",
+	API_TIMEOUT: 30000, // 30 seconds
+	APP_NAME: "Tokyo Next.js Boilerplate",
 	APP_VERSION: "1.0.0",
-	DEFAULT_LANGUAGE: "tr",
 	DEFAULT_THEME: "light",
-	SITE_URL: process.env.NEXT_PUBLIC_APP_URL || "",
+	SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || "",
 	APP_DESCRIPTION:
 		"Modern Next.js 15 boilerplate with TypeScript & Tailwind CSS",
 	APP_KEYWORDS: [
@@ -18,16 +13,15 @@ export const APP_CONFIG = {
 		"boilerplate",
 		"react"
 	] as string[],
-	CREATOR: "@omergulcicek",
-	TWITTER_HANDLE: "@omergulcicek",
-	PERSONAL_WEBSITE: "https://omergulcicek.com"
+	CREATOR: "@mannyanebi",
+	TWITTER_HANDLE: "@mannyanebi"
 } as const
 
 export type AppConfig = keyof typeof APP_CONFIG
 
 export const CURRENCY_CONFIG = {
-	TRY: {
-		locale: "tr-TR",
+	NGN: {
+		locale: "en-NG",
 		minimumFractionDigits: 2,
 		maximumFractionDigits: 2
 	},
@@ -43,5 +37,5 @@ export const CURRENCY_CONFIG = {
 	}
 } as const
 
-export const DEFAULT_CURRENCY = "TRY" as const
+export const DEFAULT_CURRENCY = "USD" as const
 export type CurrencyCode = keyof typeof CURRENCY_CONFIG

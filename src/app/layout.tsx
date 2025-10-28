@@ -1,10 +1,5 @@
 import type { Metadata } from "next"
-import { hasLocale, NextIntlClientProvider } from "next-intl"
 import { Inter } from "next/font/google"
-import { notFound } from "next/navigation"
-import { GoogleAnalytics } from "@next/third-parties/google"
-
-import { routing } from "@/i18n/routing"
 
 import { APP_CONFIG } from "@/constants"
 
@@ -12,7 +7,9 @@ import { Providers } from "@/providers"
 
 import { Footer, Header } from "@/shared"
 
-import "./../globals.css"
+// @ts-expect-error: TypeScript may not have CSS
+//  module declarations in this project; suppress the error for the global CSS import.
+import "./globals.css"
 
 const interFont = Inter({
 	variable: "--font-inter",
@@ -28,9 +25,7 @@ export const metadata: Metadata = {
 	keywords: APP_CONFIG.APP_KEYWORDS,
 	authors: [{ name: APP_CONFIG.CREATOR }],
 	creator: APP_CONFIG.CREATOR,
-	metadataBase: new URL(
-		APP_CONFIG.SITE_URL || "https://github.com/omergulcicek/nextjs-boilerplate"
-	),
+	metadataBase: new URL(APP_CONFIG.SITE_URL),
 	alternates: {
 		canonical: "/",
 		languages: {
@@ -82,31 +77,19 @@ interface RootLayoutProps {
 	params: Promise<{ locale: string }>
 }
 
-export default async function RootLayout({
-	children,
-	params
-}: RootLayoutProps) {
-	const { locale } = await params
-	if (!hasLocale(routing.locales, locale)) {
-		notFound()
-	}
-
+export default function RootLayout({ children }: RootLayoutProps) {
 	return (
-		<html lang={locale} className="light" style={{ colorScheme: "light" }}>
+		<html className="light" style={{ colorScheme: "light" }}>
 			<body
 				className={`${interFont.variable} antialiased flex flex-col min-h-screen w-full`}
 				suppressHydrationWarning
 			>
-				<NextIntlClientProvider locale={locale}>
-					<Providers>
-						<Header />
-						<main className="flex-1">{children}</main>
-						<Footer />
-					</Providers>
-				</NextIntlClientProvider>
+				<Providers>
+					<Header />
+					<main className="flex-1">{children}</main>
+					<Footer />
+				</Providers>
 			</body>
-
-			{APP_CONFIG.GA_ID && <GoogleAnalytics gaId={APP_CONFIG.GA_ID} />}
 		</html>
 	)
 }

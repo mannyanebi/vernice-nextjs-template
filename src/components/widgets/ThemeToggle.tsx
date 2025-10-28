@@ -1,6 +1,6 @@
 "use client"
 
-import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 import { useTheme } from "next-themes"
 
 import { Moon } from "lucide-react"
@@ -15,7 +15,22 @@ import {
 
 export function ThemeToggle() {
 	const { theme, setTheme } = useTheme()
-	const t = useTranslations("theme")
+	const [mounted, setMounted] = useState(false)
+
+	// Only render after mount to avoid hydration mismatch
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
+	if (!mounted) {
+		return (
+			<Select disabled>
+				<SelectTrigger className="w-24" aria-label="Theme selector">
+					<SelectValue placeholder="Theme" />
+				</SelectTrigger>
+			</Select>
+		)
+	}
 
 	return (
 		<div className="flex items-center gap-2">
@@ -25,14 +40,14 @@ export function ThemeToggle() {
 					<SelectValue />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem value="light" aria-label={t("light")}>
-						{t("light")}
+					<SelectItem value="light" aria-label="Light theme">
+						Light
 					</SelectItem>
-					<SelectItem value="dark" aria-label={t("dark")}>
-						{t("dark")}
+					<SelectItem value="dark" aria-label="Dark theme">
+						Dark
 					</SelectItem>
-					<SelectItem value="system" aria-label={t("system")}>
-						{t("system")}
+					<SelectItem value="system" aria-label="System theme">
+						System
 					</SelectItem>
 				</SelectContent>
 			</Select>

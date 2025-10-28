@@ -1,17 +1,12 @@
-import { useTranslations } from "next-intl"
 import Image from "next/image"
 import Link from "next/link"
 
-import { Turkiye } from "@/components/icons"
-
 export default function Footer() {
-	const t = useTranslations("Footer")
-
 	return (
 		<footer>
 			<div className="container">
 				<div className="flex justify-center items-center gap-2 py-10">
-					<span>{t("projectBy")}</span>
+					<span>Emmanuel Anebi</span>
 
 					<Image
 						src="/nice-avatar.png"
@@ -26,8 +21,7 @@ export default function Footer() {
 						rel="noopener noreferrer"
 						className="flex gap-2 items-center"
 					>
-						<span className="font-bold hover:underline">Ömer Gülçiçek</span>
-						<Turkiye />
+						<span className="font-bold hover:underline">Manny Anebi</span>
 					</Link>
 				</div>
 			</div>

@@ -1,12 +1,10 @@
-# Next.js Boilerplate
+# Golivwell Backoffice
 
-Modern **Next.js 15.3** boilerplate with **TypeScript** & **Tailwind CSS**
+## Tech Stack
 
-Live Demo: https://nextjs15-boilerplate.vercel.app/en
+Modern **Next.js 15.3**, **TypeScript**, **Tailwind CSS**, Zustand, TanStack Query, shadcn/ui
 
-## Features
-
-With this template, you get all the awesomeness you need:
+## Repo Features
 
 - 📂 Advanced Folder Structures
 - ⚡ [Next.js](https://nextjs.org/) with App Router support
@@ -81,10 +79,6 @@ The project follows consistent file naming conventions:
 | Helper, Schema | `form-schema.ts` | kebab-case |
 | Folder         | `login-form/`    | kebab-case |
 | Constants      | `ALPHA_REGEX`    | SNAKE_CASE |
-
-## Monitoring & Analytics
-
-🚧 Don't forget to replace all FIXME tags with proper code before finalizing the changes.
 
 ### Contributors
 

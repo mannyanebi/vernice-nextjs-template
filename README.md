@@ -20,8 +20,6 @@ With this template, you get all the awesomeness you need:
 - 🌸 Smart masking and validation with [@omergulcicek/forms](https://www.npmjs.com/package/@omergulcicek/forms)
 - 🧹 Linter with [ESLint](https://eslint.org/)
 - 💖 Code Formatter with [Prettier](https://prettier.io/)
-- 🎉 [Storybook](https://storybook.js.org/) for UI development
-- 🚨 Error tracking with [Sentry](https://sentry.io/)
 - ⏳ Loading UI using [Skeleton Components](https://ui.shadcn.com/docs/components/skeleton)
 - 🌓 Dark theme with [next-themes](https://npmjs.com/package/next-themes)
 - 💡 [Absolute Imports](https://nextjs.org/docs/pages/building-your-application/configuring/absolute-imports-and-module-aliases) with `@` prefix

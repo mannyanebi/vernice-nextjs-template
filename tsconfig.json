@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"baseUrl": "src/",
+		"baseUrl": ".",
 		"target": "ES2017",
 		"lib": ["dom", "dom.iterable", "esnext"],
 		"allowJs": true,
@@ -20,24 +20,25 @@
 			}
 		],
 		"paths": {
-			"@/*": ["./*"],
-			"@/ui": ["components/ui"],
-			"@/features": ["components/features"],
-			"@/widgets": ["components/widgets"],
-			"@/shared": ["components/shared"],
-			"@/icons": ["components/icons"],
-			"@/skeletons": ["components/skeletons"],
-			"@/providers": ["providers"],
-			"@/config": ["config"],
-			"@/constants": ["constants"],
-			"@/data": ["data"],
-			"@/schemas": ["schemas"],
-			"@/helpers": ["helpers"],
-			"@/hooks": ["hooks"],
-			"@/stores": ["stores"],
-			"@/services": ["services"],
-			"@/utils": ["lib/utils"],
-			"@/types": ["types"]
+			"@/*": ["./src/*"],
+			"@/ui": ["./src/components/ui"],
+			"@/features": ["./src/components/features"],
+			"@/widgets": ["./src/components/widgets"],
+			"@/shared": ["./src/components/shared"],
+			"@/icons": ["./src/components/icons"],
+			"@/skeletons": ["./src/components/skeletons"],
+			"@/providers": ["./src/providers"],
+			"@/config": ["./src/config"],
+			"@/constants": ["./src/constants"],
+			"@/data": ["./src/data"],
+			"@/schemas": ["./src/schemas"],
+			"@/helpers": ["./src/helpers"],
+			"@/hooks": ["./src/hooks"],
+			"@/stores": ["./src/stores"],
+			"@/services": ["./src/services"],
+			"@/utils": ["./src/lib/utils"],
+			"@/types": ["./src/types"],
+			"@/public/*": ["./public/*"]
 		}
 	},
 	"include": [

@@ -1,6 +1,6 @@
 export const APP_CONFIG = {
 	API_TIMEOUT: 30000, // 30 seconds
-	APP_NAME: "Tokyo Next.js Boilerplate",
+	APP_NAME: "Golivwell Backoffice",
 	APP_VERSION: "1.0.0",
 	DEFAULT_THEME: "light",
 	SITE_URL: process.env.NEXT_PUBLIC_SITE_URL || "",

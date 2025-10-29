@@ -1,20 +1,18 @@
 import { clsx, type ClassValue } from "clsx"
 import { format as dateFnsFormat, setDefaultOptions } from "date-fns"
-import { enUS, tr } from "date-fns/locale"
+import { enUS } from "date-fns/locale"
 import { twMerge } from "tailwind-merge"
 
 import {
 	ACCENTS_REGEX,
 	APP_CONFIG,
 	CARD_TYPE_REGEX,
-	CHAR_MAP,
 	CURRENCY_CONFIG,
 	DEFAULT_CURRENCY,
 	DIGITS_ONLY_REGEX,
 	EDGE_DASHES_REGEX,
 	INVALID_CHARS_REGEX,
 	MULTIPLE_DASHES_REGEX,
-	TURKISH_CHARS_REGEX,
 	WHITESPACE_REGEX,
 	type CardType,
 	type CurrencyCode
@@ -33,7 +31,6 @@ export const slugify = (text: string) => {
 		.toLowerCase()
 		.normalize("NFD")
 		.replace(ACCENTS_REGEX, "")
-		.replace(TURKISH_CHARS_REGEX, (c) => CHAR_MAP[c as keyof typeof CHAR_MAP])
 		.replace(WHITESPACE_REGEX, "-")
 		.replace(INVALID_CHARS_REGEX, "")
 		.replace(MULTIPLE_DASHES_REGEX, "-")

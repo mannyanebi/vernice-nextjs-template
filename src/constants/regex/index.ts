@@ -12,7 +12,6 @@ export const MULTIPLE_DASHES_REGEX = /-+/g
 export const NUMERIC_REGEX = /^\d+$/
 export const PHONE_REGEX = /^\d{10}$/
 export const TCKN_REGEX = /^\d{11}$/
-export const TURKISH_CHARS_REGEX = /[ıçşğüö]/g
 export const URL_REGEX =
 	/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/i
 export const WHITESPACE_REGEX = /\s+/g

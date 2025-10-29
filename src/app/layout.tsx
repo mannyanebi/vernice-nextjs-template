@@ -5,8 +5,6 @@ import { APP_CONFIG } from "@/constants"
 
 import { Providers } from "@/providers"
 
-import { Footer, Header } from "@/shared"
-
 // @ts-expect-error: TypeScript may not have CSS
 //  module declarations in this project; suppress the error for the global CSS import.
 import "./globals.css"
@@ -66,15 +64,15 @@ export const metadata: Metadata = {
 			"max-image-preview": "large",
 			"max-snippet": -1
 		}
-	},
-	verification: {
-		google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 	}
+	// verification: {
+	// 	google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+	// }
 }
 
 interface RootLayoutProps {
 	children: React.ReactNode
-	params: Promise<{ locale: string }>
+	// params: Promise<{ locale: string }>
 }
 
 export default function RootLayout({ children }: RootLayoutProps) {
@@ -85,9 +83,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
 				suppressHydrationWarning
 			>
 				<Providers>
-					<Header />
 					<main className="flex-1">{children}</main>
-					<Footer />
 				</Providers>
 			</body>
 		</html>

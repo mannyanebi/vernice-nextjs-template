@@ -1,6 +1,9 @@
 "use client"
 
+import { useTheme } from "next-themes"
 import Link from "next/link"
+
+import { th } from "date-fns/locale"
 
 import { cn } from "@/lib/utils"
 
@@ -15,7 +18,22 @@ const LivwellLogo = ({
 	className,
 	href = "/"
 }: LivwellLogoProps) => {
-	const colorValue = color === "primary" ? "#0fbab7" : color
+	const { theme } = useTheme()
+	console.log("🚀 ~ LivwellLogo ~ theme:", theme)
+	const setColorValue = () => {
+		if (theme === "dark") {
+			return "white"
+		}
+		if (theme === "light") {
+			return "black"
+		}
+		if (color === "primary") {
+			return "#0fbab7"
+		}
+		return color
+	}
+	const colorValue = setColorValue()
+	console.log("🚀 ~ LivwellLogo ~ colorValue:", colorValue)
 	return (
 		<Link href={href}>
 			<svg

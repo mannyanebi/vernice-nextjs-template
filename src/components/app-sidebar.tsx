@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-import { BarChart3, Link as LinkIcon } from "lucide-react"
+import { BarChart3, Link2 as LinkIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
 

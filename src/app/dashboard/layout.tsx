@@ -3,13 +3,14 @@
 
 import { ReactNode } from "react"
 
-import { Bell, Moon, MoreVertical } from "lucide-react"
+import { Bell, MoreVertical } from "lucide-react"
 
 import { AppSidebar } from "@/components/app-sidebar"
 import LivwellLogo from "@/components/atoms/LivwellLogo"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import { SidebarProvider } from "@/components/ui/sidebar"
+import { ThemeToggleIcon } from "@/components/widgets/ThemeToggleIcon"
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
 	return (
@@ -17,7 +18,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 			{/* Header */}
 			<header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b bg-background px-6">
 				<div className="flex items-center">
-					<LivwellLogo color="primary" className="h-8" />
+					<LivwellLogo color="white" className="h-8" />
 				</div>
 				<div className="flex items-center gap-4">
 					<div className="flex items-center gap-3">
@@ -35,9 +36,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 					<Button variant="ghost" size="icon">
 						<Bell className="h-5 w-5" />
 					</Button>
-					<Button variant="ghost" size="icon">
-						<Moon className="h-5 w-5" />
-					</Button>
+					<ThemeToggleIcon />
 					<Button variant="ghost" size="icon">
 						<MoreVertical className="h-5 w-5" />
 					</Button>

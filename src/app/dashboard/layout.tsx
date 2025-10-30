@@ -18,7 +18,7 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
 			{/* Header */}
 			<header className="sticky top-0 z-50 flex h-16 items-center justify-between border-b bg-background px-6">
 				<div className="flex items-center">
-					<LivwellLogo color="white" className="h-8" />
+					<LivwellLogo color="black" className="h-8" />
 				</div>
 				<div className="flex items-center gap-4">
 					<div className="flex items-center gap-3">

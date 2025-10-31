@@ -1,7 +1,3 @@
-import { Session } from "next-auth"
-import { getSession } from "next-auth/react"
-
-import { isServer } from "@tanstack/react-query"
 import type {
 	AxiosError,
 	AxiosInstance,
@@ -30,11 +26,11 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 	instance.interceptors.request.use(
 		async (config: InternalAxiosRequestConfig) => {
 			// Use dynamic import to avoid circular dependency
-			const { getAuthToken } = await import("@/lib/actions/auth-utils")
-			const token = await getAuthToken()
-			console.log("🚀 ~ setupInterceptors ~ token:", token)
-			if (token) {
-				config.headers.set("Authorization", `Bearer ${token}`)
+			const { getCurrentSession } = await import("@/lib/actions/auth-utils")
+			const session = await getCurrentSession()
+			console.log("🚀 ~ setupInterceptors ~ session:", session)
+			if (session) {
+				config.headers.set("Authorization", `Bearer ${session.accessToken}`)
 			}
 			return config
 		},
@@ -68,13 +64,18 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 
 				// Implement Refreshing Token
 
-				// If we've exceeded max retries or refresh fails, log out user
-				// Use dynamic import to avoid circular dependency
-				const { handleAuthFailure } = await import("@/lib/actions/auth-utils")
-				handleAuthFailure()
-				return Promise.reject(
-					"Session expired after multiple retry attempts. Please log in again"
-				)
+				const { getCurrentSession } = await import("@/lib/actions/auth-utils")
+				const session = await getCurrentSession()
+				if (session?.expiresIn && Date.now() > session.expiresIn) {
+					// If we've exceeded max retries or refresh fails,
+					// and session is expired, log out user
+					// Use dynamic import to avoid circular dependency
+					const { handleAuthFailure } = await import("@/lib/actions/auth-utils")
+					handleAuthFailure()
+					return Promise.reject(
+						"Session expired after multiple retry attempts. Please log in again"
+					)
+				}
 			}
 
 			if (

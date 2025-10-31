@@ -123,11 +123,12 @@ function LoginForm() {
 				</div>
 
 				<Button
-					disabled={form.formState.isSubmitting}
+					disabled={form.formState.isSubmitting || mutation.isPending}
 					type="submit"
 					className="w-full mt-2 py-6 text-lg font-semibold"
 					variant="brand"
 					size="lg"
+					isLoading={mutation.isPending}
 				>
 					Log In
 				</Button>

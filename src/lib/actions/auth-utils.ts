@@ -8,7 +8,7 @@ export const handleAuthFailure = async () => {
 	await signOut({ redirectTo: "/auth/login" })
 }
 
-export const getAuthToken = async (): Promise<string | null> => {
+export const getCurrentSession = async (): Promise<Session | null> => {
 	let session: Session | null = null
 	if (isServer) {
 		session = await auth()
@@ -16,5 +16,5 @@ export const getAuthToken = async (): Promise<string | null> => {
 		session = await getSession()
 	}
 
-	return session ? session.accessToken : null
+	return session
 }

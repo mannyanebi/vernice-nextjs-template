@@ -2,6 +2,7 @@ import NextAuth, { AuthError, Session, User } from "next-auth"
 import { JWT } from "next-auth/jwt"
 import CredentialsProvider from "next-auth/providers/credentials"
 
+import { CustomAuthUser } from "@/types/next-auth"
 import { PASSWORD_SIGN_IN_ROUTE } from "@/constants"
 
 import { http } from "@/lib/http"
@@ -12,6 +13,14 @@ class AuthenticationError extends AuthError {
 		this.message = message
 		this.stack = undefined
 	}
+}
+
+type LoginResponse = {
+	accessToken: string
+	expiresIn: number
+	email: string
+	fullName: string
+	role: "MARKETER" | "DEVELOPER"
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -42,7 +51,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 					})
 
 					// response.data contains access token and user data
-					return response.data
+					return response.data.data
 				} catch (error) {
 					// Handle HTTP errors from the backend
 					if (error && typeof error === "object" && "response" in error) {
@@ -95,6 +104,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			account,
 			session
 		}): Promise<JWT> {
+			console.log("🚀 ~ token:", token)
+			console.log("🚀 ~ trigger:", trigger)
+			console.log("🚀 ~ account:", account)
+			console.log("🚀 ~ session:", session)
 			let tokenResponse: JWT = token
 			if (trigger === "update" && session?.user) {
 				tokenResponse = {
@@ -109,12 +122,16 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
 			// Initial sign in
 			if (authResponse) {
-				const { user, accessToken, expiresIn } = authResponse as Session
+				const { accessToken, expiresIn, email, fullName, role } =
+					authResponse as LoginResponse
+				const user: CustomAuthUser = {
+					email,
+					fullName,
+					role
+				}
 				tokenResponse.user = user
 				tokenResponse.access = accessToken
-				tokenResponse.accessTokenExpires =
-					Date.now() +
-					(expiresIn || (account?.expires_in ?? 24 * 60 * 60) * 1000)
+				tokenResponse.expiresIn = Date.now() + (expiresIn || 30 * 60) * 1000 // Default to 30 minutes
 
 				return tokenResponse
 			}
@@ -124,6 +141,25 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 				return tokenResponse
 			}
 			return tokenResponse
+		},
+		async session({ session, token }): Promise<Session> {
+			// Map the JWT token data to the session object
+			if (token.user) {
+				session.user = {
+					...session.user,
+					...token.user
+				}
+			}
+
+			if (token.access) {
+				session.accessToken = token.access as string
+			}
+
+			if (token.expiresIn) {
+				session.expiresIn = token.expiresIn as number
+			}
+
+			return session
 		}
 	}
 })

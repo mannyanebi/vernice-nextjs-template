@@ -6,11 +6,10 @@ import { PASSWORD_SIGN_IN_ROUTE } from "@/constants"
 
 import { http } from "@/lib/http"
 
-export class CustomAuthError extends AuthError {
+class AuthenticationError extends AuthError {
 	constructor(message: string) {
 		super()
 		this.message = message
-		// this.stack = new Error().stack
 		this.stack = undefined
 	}
 }
@@ -41,17 +40,49 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 						email,
 						password
 					})
+
 					// response.data contains access token and user data
 					return response.data
 				} catch (error) {
-					const errorMessage =
-						error instanceof Error ? error.message : String(error)
+					// Handle HTTP errors from the backend
+					if (error && typeof error === "object" && "response" in error) {
+						const httpError = error as {
+							response?: { status?: number; data?: { message?: string } }
+						}
+						const status = httpError.response?.status
 
-					if (errorMessage.toLowerCase().includes("system user not found")) {
-						throw new CustomAuthError("Invalid email or password")
+						const backendMessage = httpError.response?.data?.message
+
+						// 401 Unauthorized - Invalid credentials
+						if (status === 401) {
+							throw new AuthenticationError("Invalid email or password")
+						}
+
+						// 404 Not Found - User not found
+						if (
+							status === 404 ||
+							backendMessage?.toLowerCase().includes("system user not found")
+						) {
+							throw new AuthenticationError("Invalid email or password")
+						}
+
+						// 500 Server Error
+						if (status === 500) {
+							throw new AuthenticationError(
+								"Authentication service unavailable. Please try again later."
+							)
+						}
+
+						// Other HTTP errors
+						if (backendMessage) {
+							throw new AuthenticationError(backendMessage)
+						}
 					}
 
-					throw new CustomAuthError(errorMessage)
+					// Fallback for unknown errors
+					const errorMessage =
+						error instanceof Error ? error.message : String(error)
+					throw new AuthenticationError(errorMessage)
 				}
 			}
 		})

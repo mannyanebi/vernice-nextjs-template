@@ -1,8 +1,10 @@
 "use server"
 
+import { AuthError } from "next-auth"
+
 import { signIn } from "auth"
 
-type AuthError = {
+interface AuthErrorResponse extends AuthError {
 	message: string
 	code:
 		| "invalid_credentials"
@@ -14,7 +16,7 @@ type AuthError = {
 export async function passwordSignIn(
 	email: string,
 	password: string
-): Promise<AuthError | undefined> {
+): Promise<AuthErrorResponse | undefined> {
 	try {
 		const result = await signIn("credentials", {
 			email,
@@ -25,6 +27,8 @@ export async function passwordSignIn(
 		// Check if signIn returns any error information
 		if (result?.error) {
 			return {
+				name: "CustomAuthError",
+				type: "CredentialsSignin",
 				message: result.error,
 				code: "auth_error"
 			}
@@ -36,6 +40,8 @@ export async function passwordSignIn(
 		const errorMessage =
 			error instanceof Error ? error.message : "Authentication failed"
 		return {
+			name: "CustomAuthError",
+			type: "CredentialsSignin",
 			message: errorMessage,
 			code: "invalid_credentials"
 		}

@@ -18,6 +18,7 @@ export default async function proxy(request: NextRequest) {
 	// Check if the path matches any protected route
 	if (isProtectedRoute(pathname)) {
 		const session = await auth()
+		console.log("🚀 ~ proxy ~ session:", session)
 
 		// If no session exists, redirect to sign-in page
 		if (!session) {

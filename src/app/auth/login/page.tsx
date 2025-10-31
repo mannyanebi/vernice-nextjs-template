@@ -17,10 +17,10 @@ function LoginPage() {
 			<div className="w-2/5">
 				<div className="rounded-b-[40px] sm:rounded-[40px] h-[400px] sm:h-[660px] sm:my-8 w-full md:w-4/5 relative mx-auto overflow-hidden">
 					<Image
+						className="object-cover"
 						src={LoginSectionImage}
 						alt="contact-us-hero"
 						fill
-						objectFit="cover"
 					/>
 				</div>
 			</div>

@@ -18,8 +18,18 @@ function usePasswordSignIn() {
 		mutationFn: async (payload: PasswordSignInFormFields) => {
 			const response = await passwordSignIn(payload.email, payload.password)
 
-			if (response?.code === "invalid_credentials") {
-				throw new Error(response.message)
+			if (response?.code) {
+				const errorMessages = {
+					auth_error: "Authentication failed. Please try again.",
+					server_error: "Server error. Please try again later.",
+					token_refresh_failed: "Session expired. Please sign in again.",
+					invalid_credentials: "Invalid email or password"
+				}
+				throw new Error(
+					errorMessages[response.code] ||
+						response.message ||
+						"Failed to sign in"
+				)
 			}
 		},
 		onSuccess: () => {

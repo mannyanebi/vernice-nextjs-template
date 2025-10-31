@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import z from "zod"
 
 import loginSchema from "@/schemas/login-schema"
+import usePasswordSignIn from "@/hooks/mutations/use-password-signin"
 
 import {
 	Form,
@@ -29,14 +30,19 @@ function LoginForm() {
 	const form = useForm<LoginFormFields>({
 		resolver: zodResolver(loginSchema),
 		defaultValues: {
-			username: "",
+			email: "",
 			password: "",
 			rememberMe: false
 		}
 	})
 
+	const mutation = usePasswordSignIn()
+
 	const onSubmitHandler = async (values: LoginFormFields) => {
-		console.log("🚀 ~ onSubmitHandler ~ values:", values)
+		mutation.mutateAsync({
+			email: values.email,
+			password: values.password
+		})
 	}
 
 	return (
@@ -47,7 +53,7 @@ function LoginForm() {
 			>
 				<FormField
 					control={form.control}
-					name="username"
+					name="email"
 					render={({ field }) => {
 						return (
 							<FormItem>

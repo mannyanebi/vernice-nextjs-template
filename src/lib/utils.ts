@@ -5,7 +5,6 @@ import { twMerge } from "tailwind-merge"
 
 import {
 	ACCENTS_REGEX,
-	APP_CONFIG,
 	CARD_TYPE_REGEX,
 	CURRENCY_CONFIG,
 	DEFAULT_CURRENCY,
@@ -66,4 +65,17 @@ export function getCardType(cardNumber: string): CardType | null {
 	}
 
 	return null
+}
+
+export function createRouteMatcher(patterns: string[]) {
+	const regexes = patterns.map((pattern) => {
+		const regexPattern = pattern
+			.replace(/\//g, "\\/")
+			.replace(/:\w+/g, "([^\\/]+)")
+		return new RegExp(`^${regexPattern}$`)
+	})
+
+	return (path: string): boolean => {
+		return regexes.some((regex) => regex.test(path))
+	}
 }

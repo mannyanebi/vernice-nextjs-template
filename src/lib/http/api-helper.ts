@@ -1,6 +1,6 @@
-import axiosInstance from "@/helpers/api-helper/axios-instance"
-
 import { ApiConfig, ApiResponseType } from "@/types"
+
+import axiosInstance from "./axios-instance"
 
 type HttpMethod = "get" | "post" | "put" | "delete"
 
@@ -54,4 +54,4 @@ class ApiHelper {
 	}
 }
 
-export const apiHelper = new ApiHelper()
+export const http = new ApiHelper()

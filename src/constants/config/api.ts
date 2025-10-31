@@ -1,11 +1,13 @@
+import { signOut } from "auth"
 import type {
+	AxiosError,
 	AxiosInstance,
 	AxiosResponse,
 	InternalAxiosRequestConfig
 } from "axios"
 
 export const API_CONFIG = {
-	BASE_URL: process.env.NEXT_PUBLIC_API_URL,
+	BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
 	TIMEOUT: 10000,
 	RETRY_COUNT: 3,
 	RETRY_DELAY: 1000,
@@ -13,6 +15,12 @@ export const API_CONFIG = {
 } as const
 
 export type ApiConfig = keyof typeof API_CONFIG
+
+interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
+	_retryCount?: number
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	_retry: any
+}
 
 export const setupInterceptors = (instance: AxiosInstance) => {
 	// Request interceptor
@@ -34,15 +42,38 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 		(response: AxiosResponse) => {
 			return response
 		},
-		async (error) => {
-			const originalRequest = error.config
+		async (error: AxiosError) => {
+			const originalRequest = error.config as CustomAxiosRequestConfig
 
-			if (error.response?.status === 401) {
-				localStorage.removeItem("token")
-				// Refresh token
+			if (
+				error.response?.status === 401 &&
+				originalRequest &&
+				typeof window !== "undefined"
+			) {
+				// Initialize retry count if not set
+				if (!originalRequest._retryCount) {
+					originalRequest._retryCount = 0
+				}
+
+				// Check if we haven't exceeded max retries (2 attempts)
+				if (originalRequest._retryCount < 2) {
+					originalRequest._retryCount++
+				}
+
+				// Implement Refreshing Token
+
+				// If we've exceeded max retries or refresh fails, log out user
+				await signOut({ redirectTo: "/auth/login" })
+				return Promise.reject(
+					"Session expired after multiple retry attempts. Please log in again"
+				)
 			}
 
-			if (error.response?.status >= 500 && !originalRequest._retry) {
+			if (
+				error.response &&
+				error.response?.status >= 500 &&
+				!originalRequest._retry
+			) {
 				originalRequest._retry = true
 				try {
 					await new Promise((resolve) =>

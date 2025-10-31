@@ -3,7 +3,7 @@ import axios from "axios"
 import { API_CONFIG, CONTENT_TYPES } from "@/constants"
 import { setupInterceptors } from "@/constants/config/api"
 
-const axiosInstance = axios.create({
+const http = axios.create({
 	baseURL: API_CONFIG.BASE_URL,
 	timeout: API_CONFIG.TIMEOUT,
 	headers: {
@@ -11,6 +11,6 @@ const axiosInstance = axios.create({
 	}
 })
 
-setupInterceptors(axiosInstance)
+setupInterceptors(http)
 
-export default axiosInstance
+export default http

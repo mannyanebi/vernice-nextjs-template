@@ -2,16 +2,13 @@ import { NextResponse, type NextRequest } from "next/server"
 
 import { auth } from "auth"
 
-import { PASSWORD_SIGN_IN_ROUTE } from "@/constants"
-
 import { createRouteMatcher } from "@/lib/utils"
 
-// const protectedRoutes = ["/api/(.*)", "/dashboard/(.*)"]
-const protectedRoutes = ["/dashboard/(.*)"]
+const protectedRoutes = ["/dashboard", "/dashboard/(.*)"]
 
 const isProtectedRoute = createRouteMatcher(protectedRoutes)
 
-export async function middleware(request: NextRequest) {
+export default async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
 	if (pathname === "/") {
@@ -24,21 +21,21 @@ export async function middleware(request: NextRequest) {
 
 		// If no session exists, redirect to sign-in page
 		if (!session) {
-			const signInUrl = new URL(PASSWORD_SIGN_IN_ROUTE, request.url)
-			// Add the current path as a redirect parameter
+			const signInUrl = new URL("/auth/login", request.url)
 			signInUrl.searchParams.set("redirect", pathname)
 			return NextResponse.redirect(signInUrl)
 		}
 	}
 
-	// Continue with the request if authenticated or not a protected route
 	return NextResponse.next()
 }
 
 export const config = {
 	matcher: [
+		// Match root path
+		"/",
 		// Skip Next.js internals and all static files, unless found in search params
-		"/((?!_next|monitoring|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
+		"/((?!_next|monitoring|[^?]*\\.(?:html?|css|js(?!on)|jpe?|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
 		// Always run for API routes
 		"/(api|trpc)(.*)"
 	]

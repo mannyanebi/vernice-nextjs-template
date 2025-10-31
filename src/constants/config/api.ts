@@ -1,4 +1,7 @@
-import { signOut } from "auth"
+import { Session } from "next-auth"
+import { getSession } from "next-auth/react"
+
+import { isServer } from "@tanstack/react-query"
 import type {
 	AxiosError,
 	AxiosInstance,
@@ -25,8 +28,11 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 export const setupInterceptors = (instance: AxiosInstance) => {
 	// Request interceptor
 	instance.interceptors.request.use(
-		(config: InternalAxiosRequestConfig) => {
-			const token = localStorage.getItem("token")
+		async (config: InternalAxiosRequestConfig) => {
+			// Use dynamic import to avoid circular dependency
+			const { getAuthToken } = await import("@/lib/actions/auth-utils")
+			const token = await getAuthToken()
+			console.log("🚀 ~ setupInterceptors ~ token:", token)
 			if (token) {
 				config.headers.set("Authorization", `Bearer ${token}`)
 			}
@@ -63,7 +69,9 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 				// Implement Refreshing Token
 
 				// If we've exceeded max retries or refresh fails, log out user
-				await signOut({ redirectTo: "/auth/login" })
+				// Use dynamic import to avoid circular dependency
+				const { handleAuthFailure } = await import("@/lib/actions/auth-utils")
+				handleAuthFailure()
 				return Promise.reject(
 					"Session expired after multiple retry attempts. Please log in again"
 				)

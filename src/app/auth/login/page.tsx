@@ -15,11 +15,7 @@ function LoginPage() {
 				<LoginForm />
 			</div>
 			<div className="w-2/5">
-				<div className="rounded-b-[40px] sm:rounded-[40px] h-[400px] sm:h-[660px] sm:my-8 w-full sm:w-[500px] lg:w-[584px] relative mx-auto overflow-hidden">
-					<LivwellLogo
-						color="white"
-						className="sm:hidden absolute top-5 left-5 z-10"
-					/>
+				<div className="rounded-b-[40px] sm:rounded-[40px] h-[400px] sm:h-[660px] sm:my-8 w-full md:w-4/5 relative mx-auto overflow-hidden">
 					<Image
 						src={LoginSectionImage}
 						alt="contact-us-hero"

@@ -1,10 +1,8 @@
 "use client"
 
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { useTheme } from "next-themes"
 import Link from "next/link"
-
-import { th } from "date-fns/locale"
 
 import { cn } from "@/lib/utils"
 
@@ -19,19 +17,33 @@ const LivwellLogo = ({
 	className,
 	href = "/"
 }: LivwellLogoProps) => {
-	const { theme } = useTheme()
+	const { theme, systemTheme } = useTheme()
+	const [mounted, setMounted] = useState(false)
+
+	useEffect(() => {
+		setMounted(true)
+	}, [])
+
 	const colorValue = useMemo(() => {
-		if (theme === "dark") {
-			return "#FFFFFF"
-		}
-		if (theme === "light") {
-			return "#000000"
-		}
 		if (color === "primary") {
 			return "#0fbab7"
 		}
+
+		if (!mounted) {
+			// Return a default color during SSR to prevent hydration mismatch
+			return color
+		}
+
+		const currentTheme = theme === "system" ? systemTheme : theme
+
+		if (currentTheme === "dark") {
+			return "white"
+		}
+		if (currentTheme === "light") {
+			return "black"
+		}
 		return color
-	}, [color, theme])
+	}, [color, theme, systemTheme, mounted])
 
 	return (
 		<Link href={href}>

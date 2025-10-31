@@ -12,20 +12,19 @@ export default async function middleware(request: NextRequest) {
 	const { pathname } = request.nextUrl
 
 	if (pathname === "/") {
-		return NextResponse.redirect(new URL("/dashboard", request.url))
+		return NextResponse.redirect(new URL("/dashboard/leads", request.url))
 	}
 
 	if (pathname === "/auth/login") {
 		const session = await auth()
 		if (session) {
-			return NextResponse.redirect(new URL("/dashboard", request.url))
+			return NextResponse.redirect(new URL("/dashboard/leads", request.url))
 		}
 	}
 
 	// Check if the path matches any protected route
 	if (isProtectedRoute(pathname)) {
 		const session = await auth()
-		console.log("🚀 ~ middleware ~ session:", session)
 
 		// If no session exists, redirect to sign-in page
 		if (!session) {

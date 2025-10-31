@@ -37,7 +37,7 @@ function usePasswordSignIn() {
 			if (callbackUrl) {
 				router.push(callbackUrl)
 			} else {
-				router.push("/dashboard")
+				router.push("/dashboard/leads")
 			}
 		},
 		onError: (error) => {

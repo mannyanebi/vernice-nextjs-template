@@ -5,6 +5,7 @@ import * as React from "react"
 import {
 	flexRender,
 	getCoreRowModel,
+	getPaginationRowModel,
 	useReactTable,
 	type ColumnDef
 } from "@tanstack/react-table"
@@ -178,7 +179,13 @@ export default function AppLinkPage() {
 	const table = useReactTable({
 		data: mockBusinesses,
 		columns,
-		getCoreRowModel: getCoreRowModel()
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		initialState: {
+			pagination: {
+				pageSize: 10
+			}
+		}
 	})
 
 	return (

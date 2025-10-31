@@ -50,7 +50,7 @@ class ApiHelper {
 		if (error instanceof Error) {
 			return error
 		}
-		return new Error("Bilinmeyen bir hata oluştu")
+		return new Error("An unknown error occurred")
 	}
 }
 

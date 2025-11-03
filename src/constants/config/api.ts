@@ -28,7 +28,6 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 			// Use dynamic import to avoid circular dependency
 			const { getCurrentSession } = await import("@/lib/actions/auth-utils")
 			const session = await getCurrentSession()
-			console.log("🚀 ~ setupInterceptors ~ session:", session)
 			if (session) {
 				config.headers.set("Authorization", `Bearer ${session.accessToken}`)
 			}
@@ -66,12 +65,13 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 
 				const { getCurrentSession } = await import("@/lib/actions/auth-utils")
 				const session = await getCurrentSession()
+
 				if (session?.expiresIn && Date.now() > session.expiresIn) {
 					// If we've exceeded max retries or refresh fails,
 					// and session is expired, log out user
 					// Use dynamic import to avoid circular dependency
 					const { handleAuthFailure } = await import("@/lib/actions/auth-utils")
-					handleAuthFailure()
+					await handleAuthFailure()
 					return Promise.reject(
 						"Session expired after multiple retry attempts. Please log in again"
 					)

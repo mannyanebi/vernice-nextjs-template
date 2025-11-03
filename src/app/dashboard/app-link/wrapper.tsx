@@ -4,6 +4,8 @@ import React, { useState } from "react"
 
 import { Search } from "lucide-react"
 
+import useFetchBusinessesWithCustomApp from "@/hooks/queries/use-fetch-businesses-with-custom-app"
+
 import PageHeader from "@/components/molecules/PageHeader"
 import { Input } from "@/components/ui/input"
 
@@ -12,6 +14,8 @@ import AppLinkDataTable from "./DataTable"
 
 function AppLinkWrapper() {
 	const [searchQuery, setSearchQuery] = useState("")
+	const { data, isLoading, isError } = useFetchBusinessesWithCustomApp()
+	console.log("🚀 ~ AppLinkWrapper ~ data:", data)
 	return (
 		<div className="flex flex-1 flex-col gap-6 p-6">
 			{/* Page Header */}

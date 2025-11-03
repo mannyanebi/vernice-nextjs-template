@@ -1,3 +1,5 @@
+import Image from "next/image"
+
 import { type ColumnDef } from "@tanstack/react-table"
 import { MoreVertical } from "lucide-react"
 
@@ -26,8 +28,14 @@ const columns: ColumnDef<Business>[] = [
 			const business = row.original
 			return (
 				<div className="flex items-center gap-3">
-					<div className="flex h-10 w-10 items-center justify-center rounded-full bg-muted text-lg">
-						{business.logo}
+					<div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-muted overflow-hidden">
+						<Image
+							src={business.logo}
+							alt={business.name}
+							width={40}
+							height={40}
+							className="h-full w-full object-cover"
+						/>
 					</div>
 					<span className="font-medium">{business.name}</span>
 				</div>

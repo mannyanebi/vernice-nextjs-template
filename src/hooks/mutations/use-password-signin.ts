@@ -1,3 +1,4 @@
+import { useSession } from "next-auth/react"
 import { useRouter, useSearchParams } from "next/navigation"
 
 import { useMutation } from "@tanstack/react-query"
@@ -5,12 +6,13 @@ import { toast } from "sonner"
 import { z } from "zod"
 
 import loginSchema from "@/schemas/login-schema"
-import { passwordSignIn } from "@/lib/actions/passwordSignIn"
+import { passwordSignIn } from "@/lib/auth-actions/passwordSignIn"
 
 type PasswordSignInFormFields = z.infer<typeof loginSchema>
 
 function usePasswordSignIn() {
 	const router = useRouter()
+	const { update } = useSession()
 
 	const searchParams = useSearchParams()
 	const callbackUrl = searchParams.get("callbackUrl")
@@ -32,7 +34,9 @@ function usePasswordSignIn() {
 				)
 			}
 		},
-		onSuccess: () => {
+		onSuccess: async () => {
+			// Update the session on client side before redirecting
+			await update()
 			toast.success("Signed in successfully")
 			if (callbackUrl) {
 				router.push(callbackUrl)

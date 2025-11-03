@@ -4,7 +4,7 @@ import { signOut as clientSignOut, getSession } from "next-auth/react"
 import { isServer } from "@tanstack/react-query"
 import { auth, signOut } from "auth"
 
-export const handleAuthFailure = async () => {
+export const signOutAndRedirect = async () => {
 	if (typeof window !== "undefined") {
 		// Client-side sign out
 		await clientSignOut({ redirect: true, callbackUrl: "/auth/login" })
@@ -14,7 +14,7 @@ export const handleAuthFailure = async () => {
 	}
 }
 
-export const getCurrentSession = async (): Promise<Session | null> => {
+export const getActiveUserSession = async (): Promise<Session | null> => {
 	let session: Session | null = null
 	if (isServer) {
 		session = await auth()

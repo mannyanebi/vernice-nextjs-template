@@ -97,17 +97,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 		})
 	],
 	callbacks: {
-		async jwt({
-			token,
-			user: authResponse,
-			trigger,
-			account,
-			session
-		}): Promise<JWT> {
-			console.log("🚀 ~ token:", token)
-			console.log("🚀 ~ trigger:", trigger)
-			console.log("🚀 ~ account:", account)
-			console.log("🚀 ~ session:", session)
+		async jwt({ token, user: authResponse, trigger, session }): Promise<JWT> {
+			console.log("🚀 JWT ~ trigger:", trigger)
 			let tokenResponse: JWT = token
 			if (trigger === "update" && session?.user) {
 				tokenResponse = {
@@ -142,7 +133,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 			}
 			return tokenResponse
 		},
-		async session({ session, token }): Promise<Session> {
+		async session({ session, token, trigger, newSession }): Promise<Session> {
+			console.log("🚀 SESSION ~ trigger:", trigger)
+			console.log("🚀 SESSION ~ newSession:", newSession)
 			// Map the JWT token data to the session object
 			if (token.user) {
 				session.user = {

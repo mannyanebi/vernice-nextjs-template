@@ -1,3 +1,5 @@
+import type { Session } from "next-auth"
+
 import type {
 	AxiosError,
 	AxiosInstance,
@@ -21,13 +23,27 @@ interface CustomAxiosRequestConfig extends InternalAxiosRequestConfig {
 	_retry: any
 }
 
+type SessionManagerHelpers = {
+	getActiveUserSession: () => Promise<Session | null>
+	signOutAndRedirect: () => Promise<void>
+}
+
+let sessionManagerHelpers: SessionManagerHelpers | null = null
+
+export const setSessionManagerHelpers = (helpers: SessionManagerHelpers) => {
+	sessionManagerHelpers = helpers
+}
+
 export const setupInterceptors = (instance: AxiosInstance) => {
 	// Request interceptor
 	instance.interceptors.request.use(
 		async (config: InternalAxiosRequestConfig) => {
-			// Use dynamic import to avoid circular dependency
-			const { getCurrentSession } = await import("@/lib/actions/auth-utils")
-			const session = await getCurrentSession()
+			if (!sessionManagerHelpers) {
+				throw new Error(
+					"Auth helpers not initialized. Call setSessionManagerHelpers first."
+				)
+			}
+			const session = await sessionManagerHelpers.getActiveUserSession()
 			if (session) {
 				config.headers.set("Authorization", `Bearer ${session.accessToken}`)
 			}
@@ -62,16 +78,18 @@ export const setupInterceptors = (instance: AxiosInstance) => {
 				}
 
 				// Implement Refreshing Token
+				if (!sessionManagerHelpers) {
+					throw new Error(
+						"Auth helpers not initialized. Call setSessionManagerHelpers first."
+					)
+				}
 
-				const { getCurrentSession } = await import("@/lib/actions/auth-utils")
-				const session = await getCurrentSession()
+				const session = await sessionManagerHelpers.getActiveUserSession()
 
 				if (session?.expiresIn && Date.now() > session.expiresIn) {
 					// If we've exceeded max retries or refresh fails,
 					// and session is expired, log out user
-					// Use dynamic import to avoid circular dependency
-					const { handleAuthFailure } = await import("@/lib/actions/auth-utils")
-					await handleAuthFailure()
+					await sessionManagerHelpers.signOutAndRedirect()
 					return Promise.reject(
 						"Session expired after multiple retry attempts. Please log in again"
 					)

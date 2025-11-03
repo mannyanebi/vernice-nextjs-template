@@ -4,11 +4,11 @@ import { useSession } from "next-auth/react"
 import { DropdownMenu } from "@radix-ui/react-dropdown-menu"
 import { Bell, LogOut, MoreVertical } from "lucide-react"
 
-import { logout } from "@/lib/actions/logout"
+import { logout } from "@/lib/auth-actions/logout"
 
 import LivwellLogo from "./atoms/LivwellLogo"
 import { Button } from "./ui"
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar"
+import { Avatar, AvatarFallback } from "./ui/avatar"
 import {
 	DropdownMenuContent,
 	DropdownMenuItem,
@@ -27,7 +27,6 @@ function NavHeader() {
 			<div className="flex items-center gap-4">
 				<div className="flex items-center gap-3">
 					<Avatar className="h-8 w-8">
-						<AvatarImage src="/avatars/user.jpg" alt="Kahlifa Rasheed" />
 						<AvatarFallback>{user?.fullName.charAt(0)}</AvatarFallback>
 					</Avatar>
 					<div className="flex flex-col">

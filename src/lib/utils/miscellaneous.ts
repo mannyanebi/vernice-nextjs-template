@@ -1,7 +1,5 @@
-import { clsx, type ClassValue } from "clsx"
 import { format as dateFnsFormat, setDefaultOptions } from "date-fns"
 import { enUS } from "date-fns/locale"
-import { twMerge } from "tailwind-merge"
 
 import {
 	ACCENTS_REGEX,
@@ -16,10 +14,6 @@ import {
 	type CardType,
 	type CurrencyCode
 } from "@/constants"
-
-export function cn(...inputs: ClassValue[]) {
-	return twMerge(clsx(inputs))
-}
 
 export const sleep = (ms: number) => {
 	return new Promise((resolve) => setTimeout(resolve, ms))

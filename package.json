@@ -11,7 +11,8 @@
     "prepare": "husky",
     "svgr": "svgr --typescript --icon --title-prop --ref --no-prettier --out-dir src/components/icons src/assets/icons",
     "storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "types:generate": "openapi-typescript https://dev-api.golivwell.com/v3/api-docs -o src/types/generated/openapi-schema.d.ts"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -80,6 +81,7 @@
     "eslint-plugin-storybook": "^9.1.13",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.5",
+    "openapi-typescript": "^7.10.1",
     "playwright": "^1.56.1",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.7.1",

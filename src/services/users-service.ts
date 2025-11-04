@@ -1,12 +1,10 @@
-import { apiHelper } from "@/helpers/api-helper/api-helper"
-
 import { UserType } from "@/types"
 import { ApiResponseType } from "@/types/api-types"
 
+import { http } from "@/lib/http"
+
 export const usersService = {
 	getUsers: async (): Promise<ApiResponseType<UserType[]>> => {
-		return apiHelper.get<UserType[]>(
-			"https://jsonplaceholder.typicode.com/users"
-		)
+		return http.get<UserType[]>("https://jsonplaceholder.typicode.com/users")
 	}
 }

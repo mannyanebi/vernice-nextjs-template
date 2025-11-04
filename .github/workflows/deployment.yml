@@ -21,7 +21,7 @@ jobs:
 
     # 🛑 Concurrency: cancel older runs for same PR or branch
     concurrency:
-      group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref_name }}
+      group: ${{ github.workflow }}-${{ github.ref_name }}
       cancel-in-progress: true
 
     steps:

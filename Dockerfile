@@ -95,8 +95,7 @@ WORKDIR /app
 # Copy only necessary files from the builder stage to keep the image minimal
 COPY --from=builder --chown=node:node /app/.next/standalone ./      
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static
-COPY --from=builder --chown=node:node /app/public ./public   
-COPY --from=builder --chown=node:node /app/messages ./messages           
+COPY --from=builder --chown=node:node /app/public ./public            
 
 # Expose port 80 to allow HTTP traffic
 EXPOSE 80

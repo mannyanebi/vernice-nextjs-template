@@ -37,12 +37,14 @@ jobs:
             echo "DEPLOYMENT_TYPE=production" >> $GITHUB_OUTPUT
             echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_PRODUCTION }}" >> $GITHUB_OUTPUT
             echo "API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL_PRODUCTION }}" >> $GITHUB_OUTPUT
+            echo "SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL_PRODUCTION }}" >> $GITHUB_OUTPUT
           elif [[ "${{ github.ref_name }}" == "develop" ]]; then
             # For develop branch - staging deployment
             echo "IMAGE_TAG=develop" >> $GITHUB_OUTPUT
             echo "DEPLOYMENT_TYPE=staging" >> $GITHUB_OUTPUT
             echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_STAGING }}" >> $GITHUB_OUTPUT
             echo "API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL_STAGING }}" >> $GITHUB_OUTPUT
+            echo "SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL_STAGING }}" >> $GITHUB_OUTPUT
           else
             # For pull requests and other branches - use PR number or branch name
             if [[ "${{ github.event_name }}" == "pull_request" ]]; then
@@ -53,6 +55,7 @@ jobs:
             echo "DEPLOYMENT_TYPE=preview" >> $GITHUB_OUTPUT
             echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL_STAGING }}" >> $GITHUB_OUTPUT
             echo "API_BASE_URL=${{ secrets.NEXT_PUBLIC_API_BASE_URL_STAGING }}" >> $GITHUB_OUTPUT
+            echo "SITE_URL=${{ secrets.NEXT_PUBLIC_SITE_URL_STAGING }}" >> $GITHUB_OUTPUT
           fi
 
       - name: Login to GitHub Container Registry
@@ -76,6 +79,7 @@ jobs:
             NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }}
             NEXTAUTH_URL=${{ steps.meta.outputs.NEXTAUTH_URL }}
             NEXT_PUBLIC_API_BASE_URL=${{ steps.meta.outputs.API_BASE_URL }}
+            NEXT_PUBLIC_SITE_URL=${{ steps.meta.outputs.SITE_URL }}
           tags: |
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ steps.meta.outputs.IMAGE_TAG }}
             ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}

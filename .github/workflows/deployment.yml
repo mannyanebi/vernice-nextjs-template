@@ -4,8 +4,8 @@ name: Build and Deploy
 on:
   push:
     branches: ["main", "develop"]
-  pull_request:
-    branches: ["develop"]
+  # pull_request:
+  #   branches: ["develop"]
 
 env:
   REGISTRY: ghcr.io

@@ -1,18 +1,10 @@
 import Image from "next/image"
 
 import { type ColumnDef } from "@tanstack/react-table"
-import { MoreVertical } from "lucide-react"
 
 import { cyrb53Hasher } from "@/lib/utils"
 
 import { Badge, BadgeVariants } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuItem,
-	DropdownMenuTrigger
-} from "@/components/ui/dropdown-menu"
 
 type LeadsBusiness = {
 	id: string

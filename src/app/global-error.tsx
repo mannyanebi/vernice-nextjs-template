@@ -3,6 +3,7 @@
 import NextError from "next/error"
 
 export default function GlobalError({
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	error
 }: {
 	error: Error & { digest?: string }

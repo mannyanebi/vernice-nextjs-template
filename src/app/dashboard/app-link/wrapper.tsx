@@ -14,7 +14,7 @@ import AppLinkDataTable from "./DataTable"
 
 function AppLinkWrapper() {
 	const [searchQuery, setSearchQuery] = useState("")
-	const { data, isLoading, isError } = useFetchBusinessesWithCustomApp()
+	const { data } = useFetchBusinessesWithCustomApp()
 	console.log("🚀 ~ AppLinkWrapper ~ data:", data)
 	return (
 		<div className="flex flex-1 flex-col gap-6 p-6">

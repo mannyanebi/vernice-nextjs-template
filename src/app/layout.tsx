@@ -5,8 +5,8 @@ import { APP_CONFIG } from "@/constants"
 
 import { Providers } from "@/providers"
 
-// @ts-expect-error: TypeScript may not have CSS
-//  module declarations in this project; suppress the error for the global CSS import.
+// Suppress the error for the global CSS import.
+// @ts-expect-error: TypeScript may not have CSS module declarations in this project
 import "./globals.css"
 
 const interFont = Inter({
